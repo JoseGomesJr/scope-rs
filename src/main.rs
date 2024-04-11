@@ -19,6 +19,7 @@ use ratatui::Terminal;
 use std::io;
 use std::io::Stdout;
 use std::path::PathBuf;
+use crate::cli::Commands;
 
 mod blink_color;
 mod command_bar;
@@ -34,14 +35,15 @@ mod serial;
 mod task_bridge;
 mod text;
 mod typewriter;
+mod bluetooth;
+mod cli;
 
 pub type ConcreteBackend = CrosstermBackend<Stdout>;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct Cli {
-    port: String,
-    baudrate: u32,
+    command: Commands,
     #[clap(short, long)]
     view_length: Option<usize>,
     #[clap(short, long)]
@@ -61,6 +63,8 @@ async fn app() -> Result<(), String> {
     plugin_installer.post()?;
 
     let cli = Cli::parse();
+
+    cli.exec();
 
     let interface = SerialIF::build_and_connect(&cli.port, cli.baudrate);
 

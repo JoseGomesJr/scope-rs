@@ -34,5 +34,13 @@ anyhow = "1.0.79"
 homedir = "0.2.1"
 regex = { version = "1.10.3", features = [] }
 tokio = { version = "1.36.0", features = ["full"] }
-[target.'cfg(windows)'.dependencies]
+
 ctrlc = "3.4.3"
+btleplug = "0.11.5"
+uuid = "1.6.1"
+async-trait = "0.1.76"
+tokio-stream = "0.1.14"
+clap-verbosity-flag = "0.4.1"
+time = "0.3.34"
+
+[target.'cfg(windows)'.dependencies]
